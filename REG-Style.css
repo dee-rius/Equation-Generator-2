@@ -4,3 +4,7 @@ fieldset{
   gap: 15px;
   padding-top: 20px;
 }
+
+#decimal-places-input{
+  display: none;
+}
