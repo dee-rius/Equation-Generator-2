@@ -32,9 +32,9 @@
       </article>
     </fieldset>
     
-    <fieldset>
+    <fieldset id="operator-selection">
       <legend>Select Operators to include</legend>
-      <label><input type="checkbox" name="chosen-operators" value="+" /> +</label>
+      <label><input type="checkbox" name="chosen-operators" value="+" checked/> +</label>
       <label><input type="checkbox" name="chosen-operators" value="-" /> -</label>
       <label><input type="checkbox" name="chosen-operators" value="*" /> *</label>
       <label><input type="checkbox" name="chosen-operators" value="/" /> /</label>
@@ -43,14 +43,14 @@
     <fieldset>
       <legend title="e.g., if selected value is 3 it will generate three numbers (e.g., 3 + 6 - 4)">Number of Numbers in the equation</legend>
       
-      <label><input type="number" name="number-of-numbers" id="number-of-numbers" value="" /></label>
+      <label><input type="number" name="number-of-numbers" id="number-of-numbers" value="2" /></label>
     </fieldset>
         <button id="settings-confirm-button">Confirm</button>
     </section>
     
     <section>
       <p id="equation-text"></p>
-      <button>Click to generate equation</button>
+      <button id="generate-equation-button">Generate equation</button>
     </section>
   </main>
   <script src="REG-Script.js"></script>
