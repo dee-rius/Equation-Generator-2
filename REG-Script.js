@@ -1,3 +1,19 @@
+const inputFields = document.getElementsByTagName("input");
+
+for(inputField of inputFields)
+{
+  inputField.addEventListener("change", checkIfHasNumbers);
+}
+
+function checkIfHasNumbers()
+{
+  if(isNaN(this.value))
+  {
+    alert("Please enter only numbers");
+    this.value = "";
+  }
+}
+
 const revealDpInputCheckbox = document.getElementById("add-decimals-checkbox");
 const userDpInput = document.getElementById("decimal-places-input");
 let chosenDecimals = 0;
@@ -7,7 +23,7 @@ userDpInput.addEventListener('change', checkValue);
 //checks if value of input element exceeds max or is below the min
 function checkValue()
 {
-  if(userDpInput.value > 100 || userDpInput.value < 1)
+  if(Number(userDpInput.value) > 100 || Number(userDpInput.value < 1))
   {
     alert("Number of decimal places should be between 1 and 100");
   }
@@ -37,7 +53,7 @@ userMinValue.addEventListener('change', compareValues);
 //compares the values of the inputted min and max values
 function compareValues()
 {
-  if(userMinValue.value != "" && userMaxValue.value != "" && userMaxValue.value < userMinValue.value )
+  if(userMinValue.value != "" && userMaxValue.value != "" && Number(userMaxValue.value) < Number(userMinValue.value ))
   {
     alert("The max must be greater or equal to the min, else, the values will be swapped");
   }
@@ -168,7 +184,6 @@ function getSettingValues()
     console.log("min= " + minValue,"max= " + maxValue);
   
   
-  
   //gets number of numbers to generate
     numOfNums = selectedNumOfNums.value;
     console.log(numOfNums);
@@ -224,6 +239,9 @@ function generateEquation()
     
     numOfNums = selectedNumOfNums.value;
   }
+  else{
+    alert("Please fill in all customisation menu input fields and click 'Confirm'.")
+  }
 }
 
 function getRandomInt(max, min)
@@ -235,3 +253,76 @@ function getRandomFloat(max, min)
 {
   return Math.random() * (max - min + 1) + min;
 }
+
+const answerSection = document.getElementById("answer-section");
+const answerInput = document.getElementById("answer-input");
+const checkAnsButton = document.getElementById("check-answer-button");
+const feedbackText = document.getElementById("feedback-text");
+
+generateEquationButton.addEventListener('click', resetColour)
+
+function resetColour()
+{
+  answerSection.style.backgroundColor = "black";
+}
+
+checkAnsButton.addEventListener('click', checkAnswer);
+
+function checkAnswer()
+{
+  let userAns = answerInput.value;
+  let correctAns = Number(eval(equationText.textContent)).toFixed(chosenDecimals);
+  console.log("correct answer = " + correctAns)
+  
+  if(allConditionsMet == true && equationText.value != "")
+  {
+    if(Number(userAns).toFixed(chosenDecimals) == Number((correctAns)).toFixed(chosenDecimals))
+    {
+      answerSection.style.backgroundColor = "rgb(50,120,50)";
+      feedbackText.innerHTML = "Correct!";
+    }
+    else{
+      answerSection.style.backgroundColor = "rgb(200,50,50)";
+      
+      feedbackText.innerHTML = "wrong...";
+    }
+  }
+  else if(equationText.innerHTML == "")
+  {
+    alert("Please generate an equation first");
+  }
+  else
+  {
+   alert("Please complete customisation");
+  }
+}
+
+//Time for some polishing
+const menuRevealText = document.getElementById("menu-reveal-text");
+const theMenu = document.getElementById("menu");
+const theMenuHolder = document.getElementById("menu-holder");
+
+menuRevealText.addEventListener('click', showMenu);
+
+function showMenu()
+{
+  theMenu.style.display = "flex";
+  theMenuHolder.classList.remove("menu-exit");
+}
+
+settingsConfirmButton.addEventListener("click", menuExitAnim);
+
+function menuExitAnim()
+{
+  if(allConditionsMet == true)
+  {
+    theMenuHolder.classList.add("menu-exit");
+    setTimeout(hideMenu, 120);
+  }
+}
+
+function hideMenu()
+{
+  theMenu.style.display = "none";
+}
+

@@ -1,10 +1,138 @@
+@keyframes menu-entrance{
+  0%{
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  100%{
+    opacity: 100;
+    transform: translateY(0px);
+  }
+}
+
+@keyframes exit-menu{
+  0%{
+    opacity: 100;
+    transform: translateY(0px);
+  }
+  100%{
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+}
+
 fieldset{
   display: flex;
   flex-wrap: wrap;
   gap: 15px;
   padding-top: 20px;
+  
+  border-radius: 20px;
+}
+
+input[type="text"], input[type="number"]{
+  padding: 3px;
+  border-style: solid;
+  border-radius: 6px;
+  border-color: transparent;
+}
+input[type="checkbox"]{
+  accent-color: grey;
+}
+input[type="number"]:focus{
+  outline-color: grey;
+}
+
+section{
+  background-color: black;
+  color: white;
+  height: fit-content;
+  padding: 10px;
+  border-radius: 20px;
+  
+  margin-top: 2vh;
+  
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+button{
+  width: fit-content;
+  margin-left: auto;
+  
+  border-radius: 6px;
+  border-style: none;
+  
+  background-color: transparent;
+  
+  color: white;
+}
+button:hover{
+  background-color: rgb(50,50,50);
+}
+
+#everything{
+  max-width: 500px;
+  margin: 2vh auto 2vh auto;
 }
 
 #decimal-places-input{
   display: none;
+}
+
+#menu-reveal-text{
+  margin-right: auto;
+  width: 100%;
+}
+
+#menu-reveal-text:hover{
+  text-decoration: underline;
+  text-decoration-color: black;
+}
+
+#menu{
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  
+  animation-name: menu-entrance;
+  animation-duration: 0.3s;
+  animation-fill-mode: forwards;
+}
+
+#equation-holder{
+  padding: 10px;
+}
+/*stops the equation text from breaking ui layout if too long*/
+#equation-text{
+  word-break: break-word;
+  word-wrap: break-word;
+}
+
+#answer-section{
+  gap: 0px;
+}
+#feedback-text{
+  margin-right: auto;
+}
+#check-answer-button{
+  width: fit-content;
+}
+
+/*class(es) for transitions*/
+.has-transition{
+  transition-property: all;
+  transition-duration: 0.3s;
+}
+
+/*class(es) for animations*/
+.menu-exit #menu{
+  
+  animation-name: exit-menu;
+  animation-duration: 0.3s;
+  animation-fill-mode: forwards,
+}
+
+.interactable{
+  cursor: pointer;
 }

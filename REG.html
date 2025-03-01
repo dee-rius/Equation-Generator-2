@@ -11,20 +11,23 @@
 </head>
 
 <body>
+  <div id="everything">
   <header>
     <h1>Equation Generator</h1>
     <p>A random equation will be generated based on your selected difficultly. Please do well to answer them correctly.</p>
   </header>
   <main>
-    <section id="customisation menu">
-      
+    <section id="menu-holder">
+      <button id="menu-reveal-text" class="has-transition interactable">Click to open customisation menu</button>
+  
+   <div id="menu">
     <fieldset id="range-selection">
       <legend title="e.g., if min is 3 and max is 6, generates numbers between 3 and 6 (e.g, 3 + 5 or 4 + 6)">Select range of generated numbers</legend>
       
-      <label>Min: <input type="number" name="range" value="" id="user-min-value" placeholder="no decimals !!!"/></label>
+      <label>Min: <input type="text" name="range" value="" id="user-min-value" placeholder="no decimals !!!"/></label>
       
       
-      <label>Max: <input type="number" name=" range" value="" id="user-max-value" placeholder="no decimals !!!"/></label>
+      <label>Max: <input type="text" name=" range" value="" id="user-max-value" placeholder="no decimals !!!"/></label>
       
       <article>
       <label><input type="checkbox" name="range" value="add-decimals" id="add-decimals-checkbox"/> Include Decimals</label>
@@ -45,14 +48,26 @@
       
       <label><input type="number" name="number-of-numbers" id="number-of-numbers" value="2" /></label>
     </fieldset>
-        <button id="settings-confirm-button">Confirm</button>
+        <button id="settings-confirm-button" class="has-transition interactable">Confirm</button>
+    </div>
     </section>
     
     <section>
-      <p id="equation-text"></p>
-      <button id="generate-equation-button">Generate equation</button>
+      <!--The fieldset is only for styling puposes-->
+      <fieldset id="equation-holder">
+        <legend>Equation</legend>
+        <p id="equation-text"></p>
+      </fieldset>
+      <button id="generate-equation-button" class="interactable">Generate equation</button>
+    </section>
+    
+    <section id="answer-section">
+      <input id="answer-input" type="text" placeholder="Type answer here">
+      <p id="feedback-text"></p>
+      <button id="check-answer-button">Check Answer</button>
     </section>
   </main>
+  </div>
   <script src="REG-Script.js"></script>
 </body>
 </html>
