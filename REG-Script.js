@@ -112,8 +112,7 @@ function getSettingValues()
   
   //gets number of numbers to generate
     numOfNums = selectedNumOfNums.value;
-    console.log(numOfNums)
-  
+    console.log(numOfNums);
 }
 
 const generateEquationButton = document.getElementById("generate-equation-button");
