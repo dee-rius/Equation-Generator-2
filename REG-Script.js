@@ -5,13 +5,17 @@ for(inputField of inputFields)
   inputField.addEventListener("change", checkIfHasNumbers);
 }
 
+//As text can also be entered, checks if the user has entered text and tells them only numbers are acceptable
 function checkIfHasNumbers()
 {
-  if(isNaN(this.value))
+  if(this.type == "text")
   {
-    alert("Please enter only numbers");
-    this.value = "";
+    if(isNaN(this.value))
+    {
+      alert("Please enter only numbers");
+    }
   }
+  
 }
 
 const revealDpInputCheckbox = document.getElementById("add-decimals-checkbox");
@@ -158,7 +162,7 @@ function getSettingValues()
   }
   
   //checks if the user min value is bigger than the user max value and swaps them around
-  if(userMinValue.value > userMaxValue.value)
+  if(Number(userMinValue.value) > Number(userMaxValue.value))
   {
     let swapValue = userMinValue.value;
     userMinValue.value = userMaxValue.value;

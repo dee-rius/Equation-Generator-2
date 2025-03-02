@@ -20,6 +20,10 @@
   }
 }
 
+p,h1{
+  cursor: text;
+}
+
 fieldset{
   display: flex;
   flex-wrap: wrap;
@@ -34,11 +38,14 @@ input[type="text"], input[type="number"]{
   border-style: solid;
   border-radius: 6px;
   border-color: transparent;
+  
+  cursor: text;
 }
 input[type="checkbox"]{
   accent-color: grey;
+  cursor: pointer;
 }
-input[type="number"]:focus{
+input[type="number"]:focus, input[type="text"]:focus{
   outline-color: grey;
 }
 
@@ -78,6 +85,10 @@ button:hover{
 
 #decimal-places-input{
   display: none;
+  
+  animation-name: menu-entrance;
+  animation-duration: 0.05s;
+  animation-fill-mode: forwards;
 }
 
 #menu-reveal-text{
