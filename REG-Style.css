@@ -81,14 +81,12 @@ button:hover{
 #everything{
   max-width: 500px;
   margin: 2vh auto 2vh auto;
+  
+  font-family: Arial;
 }
 
 #decimal-places-input{
   display: none;
-  
-  animation-name: menu-entrance;
-  animation-duration: 0.05s;
-  animation-fill-mode: forwards;
 }
 
 #menu-reveal-text{
@@ -139,6 +137,18 @@ button:hover{
 /*class(es) for animations*/
 .menu-exit #menu{
   
+  animation-name: exit-menu;
+  animation-duration: 0.3s;
+  animation-fill-mode: forwards,
+}
+
+.dP-input-enter{
+  animation-name: menu-entrance;
+  animation-duration: 0.1s;
+  animation-fill-mode: forwards;
+}
+
+.dP-input-exit{
   animation-name: exit-menu;
   animation-duration: 0.3s;
   animation-fill-mode: forwards,
