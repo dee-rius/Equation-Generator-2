@@ -40,10 +40,18 @@ function displayUserDpInput()
 {
   if(revealDpInputCheckbox.checked){
     userDpInput.style.display = "inline-block";
+    userDpInput.classList.remove("dP-input-exit");
+    userDpInput.classList.add("dP-input-enter");
   }
   else{
-    userDpInput.style.display = "none";
+    userDpInput.classList.remove("dP-input-enter");
+    userDpInput.classList.add("dP-input-exit");
+    setTimeout(hideUserDpInput, 45);
   }
+}
+
+function hideUserDpInput() {
+  userDpInput.style.display = "none";
 }
 
 const userMinValue = document.getElementById("user-min-value");
@@ -263,11 +271,22 @@ const answerInput = document.getElementById("answer-input");
 const checkAnsButton = document.getElementById("check-answer-button");
 const feedbackText = document.getElementById("feedback-text");
 
-generateEquationButton.addEventListener('click', resetColour)
+let feedbackIfCorrect = ["Correct!", "Well Done!", "As expected.", "Nice!", "A genius!", "Wonderful!", "Beautiful!", "Amazing!", "You're the man! Or woman, of course."];
 
-function resetColour()
+let feedbackIfWrong = ["Wrong...", "That's definitely incorrect", "That's incorrect","...", "Interesting...", "That's wrong...", "Wrong answer.", "Disappointing...", ];
+
+let answerCheck = false;
+
+let correctAns = 0;
+
+generateEquationButton.addEventListener('click', resetSection)
+
+function resetSection()
 {
+  answerInput.value = "";
   answerSection.style.backgroundColor = "black";
+  feedbackText.innerHTML = "";
+  revealedAns = false;
 }
 
 checkAnsButton.addEventListener('click', checkAnswer);
@@ -275,20 +294,30 @@ checkAnsButton.addEventListener('click', checkAnswer);
 function checkAnswer()
 {
   let userAns = answerInput.value;
-  let correctAns = Number(eval(equationText.textContent)).toFixed(chosenDecimals);
+  correctAns = Number(eval(equationText.textContent)).toFixed(chosenDecimals);
   console.log("correct answer = " + correctAns)
   
   if(allConditionsMet == true && equationText.value != "")
   {
     if(Number(userAns).toFixed(chosenDecimals) == Number((correctAns)).toFixed(chosenDecimals))
     {
-      answerSection.style.backgroundColor = "rgb(50,120,50)";
-      feedbackText.innerHTML = "Correct!";
+      if(revealedAns == false)
+      {
+        answerSection.style.backgroundColor = "rgb(50,120,50)";
+      }
+      else{
+        answerSection.style.backgroundColor = "rgb(50,120,50)";
+        feedbackText.innerHTML = "Correct, but you got help.";
+      }
+    }
+    else if(answerInput.value == "")
+    {
+      feedbackText.innerHTML = "Nothing to check..."
     }
     else{
       answerSection.style.backgroundColor = "rgb(200,50,50)";
       
-      feedbackText.innerHTML = "wrong...";
+      feedbackText.innerHTML = feedbackIfWrong[getRandomInt(feedbackIfWrong.length - 1, 0)];
     }
   }
   else if(equationText.innerHTML == "")
@@ -301,6 +330,25 @@ function checkAnswer()
   }
 }
 
+const revealAnsButton = document.getElementById("reveal-answer-button");
+let revealedAns = false;
+
+revealAnsButton.addEventListener('click', revealAns);
+
+function revealAns()
+{
+  correctAns = Number(eval(equationText.textContent)).toFixed(chosenDecimals);
+  
+  if(equationText.innerHTML != "")
+  {
+    answerInput.value = correctAns;
+    revealedAns = true;
+  }
+  else{
+    alert("Please generate an equation first");
+  }
+}
+
 //Time for some polishing
 const menuRevealText = document.getElementById("menu-reveal-text");
 const theMenu = document.getElementById("menu");
@@ -310,6 +358,7 @@ menuRevealText.addEventListener('click', showMenu);
 
 function showMenu()
 {
+  menuRevealText.innerHTML = "Customisation Menu";
   theMenu.style.display = "flex";
   theMenuHolder.classList.remove("menu-exit");
 }
@@ -320,8 +369,9 @@ function menuExitAnim()
 {
   if(allConditionsMet == true)
   {
+    menuRevealText.textContent = "Click to open customisation menu";
     theMenuHolder.classList.add("menu-exit");
-    setTimeout(hideMenu, 120);
+    setTimeout(hideMenu, 140);
   }
 }
 
@@ -329,4 +379,3 @@ function hideMenu()
 {
   theMenu.style.display = "none";
 }
-
