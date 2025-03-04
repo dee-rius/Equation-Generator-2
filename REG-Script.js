@@ -128,10 +128,6 @@ function settingsComplete()
   {
     allConditionsMet = true;
   }
-  else if(revealDpInputCheckbox.checked && userDpInput.value == "")
-  {
-    allConditionsMet = false;
-  }
   else
   {
     allConditionsMet = false;
@@ -149,11 +145,12 @@ function settingsComplete()
 
 function getSettingValues()
 {
-  //checks if value exceeds tbe max or is below the min
+  //checks if value exceeds the max or is below the min
   if(userDpInput.value > 100)
   {
     userDpInput.value = 100;
   }
+  //Surprisingly, it also changes to one if there has been no inputted dp value, which is nice
   else if(userDpInput.value < 1)
   {
     userDpInput.value = 1;
