@@ -268,10 +268,6 @@ const answerInput = document.getElementById("answer-input");
 const checkAnsButton = document.getElementById("check-answer-button");
 const feedbackText = document.getElementById("feedback-text");
 
-let feedbackIfCorrect = ["Correct!", "Well Done!", "As expected.", "Nice!", "A genius!", "Wonderful!", "Beautiful!", "Amazing!", "You're the man! Or woman, of course."];
-
-let feedbackIfWrong = ["Wrong...", "That's definitely incorrect", "That's incorrect","...", "Interesting...", "That's wrong...", "Wrong answer.", "Disappointing...", ];
-
 let isCorrect = false;
 
 let correctAns = 0;
@@ -284,9 +280,7 @@ function resetSection()
   answerSection.style.backgroundColor = "black";
   feedbackText.innerHTML = "";
   revealedAns = false;
-  
   isCorrect = false;
-  
 }
 
 checkAnsButton.addEventListener('click', checkAnswer);
@@ -304,11 +298,13 @@ function checkAnswer()
       if(revealedAns == false)
       {
         answerSection.style.backgroundColor = "rgb(50,120,50)";
-        feedbackText.innerHTML = feedbackIfCorrect[getRandomInt(feedbackIfCorrect.length - 1, 0)];
+        feedbackText.innerHTML = "Correct!";
+        isCorrect = true;
       }
       else{
         answerSection.style.backgroundColor = "rgb(50,120,50)";
         feedbackText.innerHTML = "Correct, but you got help.";
+        isCorrect = true;
       }
     }
     else if(answerInput.value == "")
@@ -318,7 +314,7 @@ function checkAnswer()
     else{
       answerSection.style.backgroundColor = "rgb(200,50,50)";
       
-      feedbackText.innerHTML = feedbackIfWrong[getRandomInt(feedbackIfWrong.length - 1, 0)];
+      feedbackText.innerHTML = "wrong..."
     }
   }
   else if(equationText.innerHTML == "")
@@ -342,8 +338,11 @@ function revealAns()
   
   if(equationText.innerHTML != "")
   {
-    answerInput.value = correctAns;
-    revealedAns = true;
+    if(isCorrect == false)
+    {
+      answerInput.value = correctAns;
+      revealedAns = true;
+    }
   }
   else{
     alert("Please generate an equation first");
