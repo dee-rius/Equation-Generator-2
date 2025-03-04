@@ -150,14 +150,14 @@ function getSettingValues()
   {
     userDpInput.value = 100;
   }
-  //Surprisingly, it also changes to one if there has been no inputted dp value, which is nice
+  //Surprisingly, it also changes to one if there has been no inputted dp value, which is ni
   else if(userDpInput.value < 1)
   {
     userDpInput.value = 1;
   }
   
   //gets user's chosen number of decimals
-  if(revealDpInputCheckbox.checked && userDpInput.value !=""){
+  if(revealDpInputCheckbox.checked){
     chosenDecimals = Number(userDpInput.value);
     console.log("dp value= " + chosenDecimals);
   }
@@ -175,7 +175,7 @@ function getSettingValues()
   }
   
   //makes sure the chosen min and max values have the same decimal places as the user's decimal places input
-  if(revealDpInputCheckbox.checked && userDpInput.value != "")
+  if(revealDpInputCheckbox.checked)
   {
     userMinValue.value = Number(userMinValue.value).toFixed(chosenDecimals);
     userMaxValue.value = Number(userMaxValue.value).toFixed(chosenDecimals);
@@ -272,7 +272,7 @@ let feedbackIfCorrect = ["Correct!", "Well Done!", "As expected.", "Nice!", "A g
 
 let feedbackIfWrong = ["Wrong...", "That's definitely incorrect", "That's incorrect","...", "Interesting...", "That's wrong...", "Wrong answer.", "Disappointing...", ];
 
-let answerCheck = false;
+let isCorrect = false;
 
 let correctAns = 0;
 
@@ -284,6 +284,9 @@ function resetSection()
   answerSection.style.backgroundColor = "black";
   feedbackText.innerHTML = "";
   revealedAns = false;
+  
+  isCorrect = false;
+  
 }
 
 checkAnsButton.addEventListener('click', checkAnswer);
@@ -291,8 +294,8 @@ checkAnsButton.addEventListener('click', checkAnswer);
 function checkAnswer()
 {
   let userAns = answerInput.value;
-  correctAns = Number(eval(equationText.textContent)).toFixed(chosenDecimals);
-  console.log("correct answer = " + correctAns)
+  correctAns = eval(equationText.textContent).toFixed(chosenDecimals);
+  console.log("correct answer = " + correctAns);
   
   if(allConditionsMet == true && equationText.value != "")
   {
@@ -301,6 +304,7 @@ function checkAnswer()
       if(revealedAns == false)
       {
         answerSection.style.backgroundColor = "rgb(50,120,50)";
+        feedbackText.innerHTML = feedbackIfCorrect[getRandomInt(feedbackIfCorrect.length - 1, 0)];
       }
       else{
         answerSection.style.backgroundColor = "rgb(50,120,50)";
@@ -309,7 +313,7 @@ function checkAnswer()
     }
     else if(answerInput.value == "")
     {
-      feedbackText.innerHTML = "Nothing to check..."
+      feedbackText.innerHTML = "Nothing to check...";
     }
     else{
       answerSection.style.backgroundColor = "rgb(200,50,50)";
