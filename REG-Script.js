@@ -13,6 +13,7 @@ function checkIfHasNumbers()
     if(isNaN(this.value))
     {
       alert("Please enter only numbers");
+      this.value = "";
     }
   }
   
