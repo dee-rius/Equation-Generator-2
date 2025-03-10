@@ -83,6 +83,7 @@ button:hover{
   margin: 2vh auto 2vh auto;
   
   font-family: Arial;
+  height: 100vh;
 }
 
 #decimal-places-input{
