@@ -19,7 +19,9 @@ function checkIfHasNumbers()
   
 }
 
-const revealDpInputCheckbox = document.getElementById("add-decimals-checkbox");
+if (true) {
+  
+}const revealDpInputCheckbox = document.getElementById("add-decimals-checkbox");
 const userDpInput = document.getElementById("decimal-places-input");
 let chosenDecimals = 0;
 
@@ -40,7 +42,7 @@ revealDpInputCheckbox.addEventListener('change', displayUserDpInput);
 function displayUserDpInput()
 {
   if(revealDpInputCheckbox.checked){
-    userDpInput.style.display = "inline-block";
+    userDpInput.style.display = "flex";
     userDpInput.classList.remove("dP-input-exit");
     userDpInput.classList.add("dP-input-enter");
   }
@@ -88,7 +90,10 @@ const settingsConfirmButton = document.getElementById("settings-confirm-button")
 
 settingsConfirmButton.addEventListener('click', settingsComplete);
 
-const requiredInputFields = [userMaxValue, userMinValue, selectedNumOfNums];
+const selectedNumOfEquations = document.getElementById("number-of-equations");
+let numOfEquations = 0;
+
+const requiredInputFields = [userMaxValue, userMinValue, selectedNumOfNums, numOfEquations];
 
 let allConditionsMet =  false;
 
@@ -107,7 +112,7 @@ function settingsComplete()
       filledInFields += 1;
     }
   }
-  if(filledInFields == 3)
+  if(filledInFields == requiredInputFields.length)
   {
     conditionsMet += 1;
   }
@@ -197,6 +202,8 @@ function getSettingValues()
   //gets number of numbers to generate
     numOfNums = selectedNumOfNums.value;
     console.log(numOfNums);
+    
+    numOfEquations = selectedNumOfEquations.value;
 }
 
 const generateEquationButton = document.getElementById("generate-equation-button");
@@ -270,7 +277,7 @@ const checkAnsButton = document.getElementById("check-answer-button");
 const feedbackText = document.getElementById("feedback-text");
 
 let isCorrect = false;
-
+let countAsWrong = false;
 let correctAns = 0;
 
 generateEquationButton.addEventListener('click', resetSection)
@@ -282,6 +289,7 @@ function resetSection()
   feedbackText.innerHTML = "";
   revealedAns = false;
   isCorrect = false;
+  countAsWrong = false;
 }
 
 checkAnsButton.addEventListener('click', checkAnswer);
@@ -298,14 +306,17 @@ function checkAnswer()
     {
       if(revealedAns == false)
       {
-        answerSection.style.backgroundColor = "rgb(50,120,50)";
+        answerSection.style.backgroundColor = "rgb(50,180,50)";
         feedbackText.innerHTML = "Correct!";
         isCorrect = true;
       }
       else{
-        answerSection.style.backgroundColor = "rgb(50,120,50)";
+        answerSection.style.backgroundColor = "rgb(50,180,50)";
         feedbackText.innerHTML = "Correct, but you got help.";
         isCorrect = true;
+        
+        //is counted as wrong if answer is revealed
+        countAsWrong = true;
       }
     }
     else if(answerInput.value == "")
@@ -317,6 +328,8 @@ function checkAnswer()
       
       feedbackText.innerHTML = "wrong..."
     }
+    
+    showProgress();
   }
   else if(equationText.innerHTML == "")
   {
@@ -326,6 +339,14 @@ function checkAnswer()
   {
    alert("Please complete customisation");
   }
+}
+
+
+const progressBar = document.getElementById("progress-bar");
+const progressText = document.getElementById("progress-text")
+function showProgress() 
+{
+  
 }
 
 const revealAnsButton = document.getElementById("reveal-answer-button");

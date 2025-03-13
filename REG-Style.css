@@ -26,11 +26,20 @@ p,h1{
 
 fieldset{
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
-  gap: 15px;
+  gap: 10px;
   padding-top: 20px;
   
+  align-items: center;
+  justify-content: center;
+  
   border-radius: 20px;
+}
+fieldset#operator-list{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 input[type="text"], input[type="number"]{
@@ -110,6 +119,19 @@ button:hover{
   animation-fill-mode: forwards;
 }
 
+
+#progress-section{
+  display: flex;
+  flex-direction: column;
+  
+  justify-content: center;
+}
+#progress-bar{
+  accent-color: grey;
+}
+#progress-text{
+}
+
 #equation-holder{
   padding: 10px;
 }
@@ -128,6 +150,7 @@ button:hover{
 #check-answer-button{
   width: fit-content;
 }
+
 
 /*class(es) for transitions*/
 .has-transition{

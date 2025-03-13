@@ -21,35 +21,48 @@
       <button id="menu-reveal-text" class="has-transition interactable">Click to open customisation menu</button>
   
    <div id="menu">
+     <fieldset>
+       <p>Number of equations to generate</p>
+       <input type="number" id="number-of-equations"/>
+     </fieldset>
+     
+     <fieldset>
+      <p title="e.g., if selected value is 3 it will generate three numbers (e.g., 3 + 6 - 4)">Number of Numbers in each equation</p>
+      
+      <label><input type="number" id="number-of-numbers" value="2" /></label>
+    </fieldset>
+     
     <fieldset id="range-selection">
-      <legend title="e.g., if min is 3 and max is 6, generates numbers between 3 and 6 (e.g, 3 + 5 or 4 + 6)">Select range of generated numbers</legend>
+      <p title="e.g., if min  3 and max is 6, generates numbers between 3 and 6 (e.g, 3 + 5 or 4 + 6)">Select range of generated numbers</p>
       
-      <label>Min: <input type="text" name="range" value="" id="user-min-value" placeholder="no decimals !!!"/></label>
+      <input type="text" name="range" value="" id="user-min-value" placeholder="min"/>
       
       
-      <label>Max: <input type="text" name=" range" value="" id="user-max-value" placeholder="no decimals !!!"/></label>
+      <input type="text" name=" range" value="" id="user-max-value" placeholder="max"/>
       
       <article>
       <label><input type="checkbox" name="range" value="add-decimals" id="add-decimals-checkbox"/> Include Decimals</label>
-      <input type="number" placeholder="number of decimal places (max = 100)" id="decimal-places-input">
+      <input type="number" placeholder="number of decimal places" id="decimal-places-input">
       </article>
     </fieldset>
     
     <fieldset id="operator-selection">
-      <legend>Select Operators to include</legend>
+      <p>Select Operators to include</p
+      >
+      <div id="operator-list">
       <label><input type="checkbox" name="chosen-operators" value="+" checked/> +</label>
       <label><input type="checkbox" name="chosen-operators" value="-" /> -</label>
       <label><input type="checkbox" name="chosen-operators" value="*" /> *</label>
       <label><input type="checkbox" name="chosen-operators" value="/" /> /</label>
+      </div>
     </fieldset>
-    
-    <fieldset>
-      <legend title="e.g., if selected value is 3 it will generate three numbers (e.g., 3 + 6 - 4)">Number of Numbers in the equation</legend>
-      
-      <label><input type="number" name="number-of-numbers" id="number-of-numbers" value="2" /></label>
-    </fieldset>
+
         <button id="settings-confirm-button" class="has-transition interactable">Confirm</button>
     </div>
+    </section>
+    
+    <section>
+      <label style="width: 70%; display: flex; gap: 10px;">Progress: <strong id="progress-text">0/0</strong> <progress id="progress-bar" value="0" min="0" max="0"></progress></label>
     </section>
     
     <section>
