@@ -204,6 +204,12 @@ function getSettingValues()
     console.log(numOfNums);
     
     numOfEquations = selectedNumOfEquations.value;
+    numOfEquaText.textContent = numOfEquations;
+    progressBar.max = numOfEquations;
+    progressBar.value = 0;
+    
+    progress.textContent= 0;
+    corrects = numOfEquations;
 }
 
 const generateEquationButton = document.getElementById("generate-equation-button");
@@ -290,9 +296,12 @@ function resetSection()
   revealedAns = false;
   isCorrect = false;
   countAsWrong = false;
+  progressSaved = false;
 }
 
 checkAnsButton.addEventListener('click', checkAnswer);
+
+let progressSaved = false;
 
 function checkAnswer()
 {
@@ -306,17 +315,23 @@ function checkAnswer()
     {
       if(revealedAns == false)
       {
-        answerSection.style.backgroundColor = "rgb(50,180,50)";
+        answerSection.style.backgroundColor = "rgb(50,130,50)";
         feedbackText.innerHTML = "Correct!";
         isCorrect = true;
       }
       else{
-        answerSection.style.backgroundColor = "rgb(50,180,50)";
+        answerSection.style.backgroundColor = "rgb(50,130,50)";
         feedbackText.innerHTML = "Correct, but you got help.";
         isCorrect = true;
         
         //is counted as wrong if answer is revealed
         countAsWrong = true;
+      }
+      
+      if(progressSaved == false)
+      {
+        progress.textContent = eval(Number(progress.innerHTML) + 1);
+        progressSaved = true;
       }
     }
     else if(answerInput.value == "")
@@ -326,9 +341,16 @@ function checkAnswer()
     else{
       answerSection.style.backgroundColor = "rgb(200,50,50)";
       
-      feedbackText.innerHTML = "wrong..."
+      feedbackText.innerHTML = "wrong...";
+      countAsWrong = true;
+      
+      if(progressSaved == false)
+      {
+        progress.textContent = eval(Number(progress.innerHTML) + 1);
+        corrects -= 1;
+        progressSaved = true;
+      }
     }
-    
     showProgress();
   }
   else if(equationText.innerHTML == "")
@@ -344,9 +366,20 @@ function checkAnswer()
 
 const progressBar = document.getElementById("progress-bar");
 const progressText = document.getElementById("progress-text")
+const progress = document.getElementById("progress");
+const numOfEquaText = document.getElementById("num-of-equa-text");
+let corrects = 0;
+let wrongs = 0;
+
 function showProgress() 
 {
+    progressBar.value = Number(progress.textContent);
+    numOfEquaText.innerHTML = numOfEquations;
   
+  if(progress.textContent == numOfEquations)
+  {
+    alert("You got" + String(corrects + "/"+ numOfEquations));
+  }
 }
 
 const revealAnsButton = document.getElementById("reveal-answer-button");
