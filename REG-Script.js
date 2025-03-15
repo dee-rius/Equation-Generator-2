@@ -90,7 +90,7 @@ function noDecimals() {
   {
     if(this.value < 2)
     {
-      alert("Number of numbers must be greater than or equal to 2")
+      alert("Number of numbers must be greater than or equal to 2");
       this.value = 2;
     }
   }
