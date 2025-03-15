@@ -80,10 +80,20 @@ const chosenOperators = document.getElementsByName("chosen-operators");
 const selectedNumOfNums = document.getElementById("number-of-numbers");
 let numOfNums = 0;
 
-selectedNumOfNums.addEventListener("change", noDecimals)
+selectedNumOfNums.addEventListener("change", noDecimals);
+numOfEquations.addEventListener('change', noDecimals)
 
 function noDecimals() {
   selectedNumOfNums.value = Number(selectedNumOfNums.value).toFixed(0);
+  
+  if(this.id == "number-of-numbers")
+  {
+    if(this.value < 2)
+    {
+      alert("Number of numbers must be greater than or equal to 2")
+      this.value = 2;
+    }
+  }
 }
 
 const settingsConfirmButton = document.getElementById("settings-confirm-button");
