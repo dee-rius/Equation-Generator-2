@@ -1,33 +1,111 @@
 const inputFields = document.getElementsByTagName("input");
 
-for(inputField of inputFields)
+for(let inputField of inputFields)
 {
+  //As text can also be entered, checks if the user has entered text and tells them only numbers are acceptable
   inputField.addEventListener("change", checkIfHasNumbers);
 }
 
-//As text can also be entered, checks if the user has entered text and tells them only numbers are acceptable
-function checkIfHasNumbers()
-{
-  if(this.type == "text")
-  {
-    if(isNaN(this.value))
-    {
-      alert("Please enter only numbers");
-      this.value = "";
-    }
-  }
-  
-}
-
-if (true) {
-  
-}const revealDpInputCheckbox = document.getElementById("add-decimals-checkbox");
+const revealDpInputCheckbox = document.getElementById("add-decimals-checkbox");
 const userDpInput = document.getElementById("decimal-places-input");
 let chosenDecimals = 0;
 
+//checks if value of input element exceeds max or is below the min
 userDpInput.addEventListener('change', checkValue);
 
-//checks if value of input element exceeds max or is below the min
+//so the user decimal place input element is displayed once the user choses to include decimals
+revealDpInputCheckbox.addEventListener('change', displayUserDpInput);
+
+const userMinValue = document.getElementById("user-min-value");
+let minValue = 0;
+const userMaxValue = document.getElementById("user-max-value");
+let maxValue = 0;
+
+//compares the values of the inputted min and max values
+userMaxValue.addEventListener('change', compareValues);
+userMinValue.addEventListener('change', compareValues);
+
+const chosenOperators = document.getElementsByName("chosen-operators");
+
+const selectedNumOfNums = document.getElementById("number-of-numbers");
+let numOfNums = 0;
+
+const settingsConfirmButton = document.getElementById("settings-confirm-button");
+//checks if all conditins are met beore storing input values
+settingsConfirmButton.addEventListener('click', settingsComplete);
+
+const selectedNumOfEquations = document.getElementById("number-of-equations");
+let numOfEquations = 0;
+
+const requiredInputFields = [userMaxValue, userMinValue, selectedNumOfNums, numOfEquations];
+
+let allConditionsMet =  false;
+
+//makes sure input values do not include decimals as they require q=whole numbers to work
+const noDecimalInputs = [selectedNumOfEquations, selectedNumOfNums]
+
+for(let noDecimalInput of noDecimalInputs)
+{
+  noDecimalInput.addEventListener("change", noDecimals);
+}
+
+const generateEquationButton = document.getElementById("generate-equation-button");
+const equationText = document.getElementById("equation-text");
+
+generateEquationButton.addEventListener("click", generateEquation);
+//Resets the answer section when generate equation button is clicked
+generateEquationButton.addEventListener('click', resetSection);
+
+const answerSection = document.getElementById("answer-section");
+const answerInput = document.getElementById("answer-input");
+const checkAnsButton = document.getElementById("check-answer-button");
+const feedbackText = document.getElementById("feedback-text");
+
+let isCorrect = false;
+let countAsWrong = false;
+let correctAns = 0;
+
+const revealAnsButton = document.getElementById("reveal-answer-button");
+let revealedAns = false;
+//allows user to reveal answer
+revealAnsButton.addEventListener('click', revealAns);
+
+//checks if the answer is right or wrong
+checkAnsButton.addEventListener('click', checkAnswer);
+//boolean is used to make sure progress has already been added
+let progressSaved = false;
+
+const progressBar = document.getElementById("progress-bar");
+const progressText = document.getElementById("progress-text")
+const progress = document.getElementById("progress");
+const numOfEquaText = document.getElementById("num-of-equa-text");
+let corrects = 0;
+let wrongs = 0;
+
+//Time for some polishing
+const menuRevealText = document.getElementById("menu-reveal-text");
+const theMenu = document.getElementById("menu");
+const theMenuHolder = document.getElementById("menu-holder");
+
+menuRevealText.addEventListener('click', showMenu);
+settingsConfirmButton.addEventListener("click", menuExitAnim);
+
+function checkIfHasNumbers()
+{
+  for(let inputField of inputFields)
+  {
+    if(inputField.type == "text")
+      {
+        if(isNaN(inputField.value))
+        {
+          alert("Please enter only numbers");
+          inputField.value = "";
+        }
+      }
+  }
+}
+
+
 function checkValue()
 {
   if(Number(userDpInput.value) > 100 || Number(userDpInput.value < 1))
@@ -36,8 +114,6 @@ function checkValue()
   }
 } 
 
-//so the user decimal place input element is displayed once the user choses to include decimals
-revealDpInputCheckbox.addEventListener('change', displayUserDpInput);
 
 function displayUserDpInput()
 {
@@ -53,19 +129,12 @@ function displayUserDpInput()
   }
 }
 
+
 function hideUserDpInput() {
   userDpInput.style.display = "none";
 }
 
-const userMinValue = document.getElementById("user-min-value");
-let minValue = 0;
-const userMaxValue = document.getElementById("user-max-value");
-let maxValue = 0;
 
-userMaxValue.addEventListener('change', compareValues);
-userMinValue.addEventListener('change', compareValues);
-
-//compares the values of the inputted min and max values
 function compareValues()
 {
   if(userMinValue.value != "" && userMaxValue.value != "" && Number(userMaxValue.value) < Number(userMinValue.value ))
@@ -75,37 +144,25 @@ function compareValues()
 }
 
 
-const chosenOperators = document.getElementsByName("chosen-operators");
-
-const selectedNumOfNums = document.getElementById("number-of-numbers");
-let numOfNums = 0;
-
-selectedNumOfNums.addEventListener("change", noDecimals);
-numOfEquations.addEventListener('change', noDecimals)
-
 function noDecimals() {
-  selectedNumOfNums.value = Number(selectedNumOfNums.value).toFixed(0);
-  
-  if(this.id == "number-of-numbers")
+  for(let noDecimalInput of noDecimalInputs)
   {
-    if(this.value < 2)
+    noDecimalInput.value = Number(noDecimalInput.value).toFixed(0);
+
+    if(noDecimalInput.id == "number-of-numbers" && noDecimalInput.value < 2)
     {
-      alert("Number of numbers must be greater than or equal to 2");
-      this.value = 2;
+      alert("number of numbers must be 2 or greater");
+      noDecimalInput.value = 2;
     }
+    else if(noDecimalInput.id == "number-of-equations" && noDecimalInput.value < 1)
+      {
+        alert("number of equations must be equal to 1 or greater");
+        noDecimalInput.value = 1;
+      }
   }
 }
 
-const settingsConfirmButton = document.getElementById("settings-confirm-button");
 
-settingsConfirmButton.addEventListener('click', settingsComplete);
-
-const selectedNumOfEquations = document.getElementById("number-of-equations");
-let numOfEquations = 0;
-
-const requiredInputFields = [userMaxValue, userMinValue, selectedNumOfNums, numOfEquations];
-
-let allConditionsMet =  false;
 
 function settingsComplete() 
 {   
@@ -128,7 +185,7 @@ function settingsComplete()
   }
   
   //checks if at least one operator is chosen
-  for(chosenOperator of chosenOperators)
+  for(let chosenOperator of chosenOperators)
   {
     if(chosenOperator.checked)
     {
@@ -219,13 +276,9 @@ function getSettingValues()
     progressBar.value = 0;
     
     progress.textContent= 0;
-    corrects = numOfEquations;
 }
 
-const generateEquationButton = document.getElementById("generate-equation-button");
-const equationText = document.getElementById("equation-text");
 
-generateEquationButton.addEventListener("click", generateEquation);
 
 function generateEquation()
 {
@@ -236,7 +289,7 @@ function generateEquation()
   {
     
     //loops through list of operators and adds the ones selected to a list
-    for(chosenOperator of chosenOperators)
+    for(let chosenOperator of chosenOperators)
   {
     if(chosenOperator.checked)
     {
@@ -287,16 +340,7 @@ function getRandomFloat(max, min)
   return Math.random() * (max - min + 1) + min;
 }
 
-const answerSection = document.getElementById("answer-section");
-const answerInput = document.getElementById("answer-input");
-const checkAnsButton = document.getElementById("check-answer-button");
-const feedbackText = document.getElementById("feedback-text");
 
-let isCorrect = false;
-let countAsWrong = false;
-let correctAns = 0;
-
-generateEquationButton.addEventListener('click', resetSection)
 
 function resetSection()
 {
@@ -307,11 +351,11 @@ function resetSection()
   isCorrect = false;
   countAsWrong = false;
   progressSaved = false;
+
+  corrects = 0;
 }
 
-checkAnsButton.addEventListener('click', checkAnswer);
 
-let progressSaved = false;
 
 function checkAnswer()
 {
@@ -328,20 +372,29 @@ function checkAnswer()
         answerSection.style.backgroundColor = "rgb(50,130,50)";
         feedbackText.innerHTML = "Correct!";
         isCorrect = true;
+
+        if(progressSaved == false)
+        {
+          progress.textContent = eval(Number(progress.innerHTML) + 1);
+          corrects +=1;
+          progressSaved = true;
+        }
       }
       else{
         answerSection.style.backgroundColor = "rgb(50,130,50)";
         feedbackText.innerHTML = "Correct, but you got help.";
         isCorrect = true;
-        
         //is counted as wrong if answer is revealed
         countAsWrong = true;
       }
       
       if(progressSaved == false)
       {
-        progress.textContent = eval(Number(progress.innerHTML) + 1);
-        progressSaved = true;
+        if(progressSaved == false)
+        {
+          progress.textContent = eval(Number(progress.innerHTML) + 1);
+          progressSaved = true;
+        }
       }
     }
     else if(answerInput.value == "")
@@ -357,7 +410,6 @@ function checkAnswer()
       if(progressSaved == false)
       {
         progress.textContent = eval(Number(progress.innerHTML) + 1);
-        corrects -= 1;
         progressSaved = true;
       }
     }
@@ -374,12 +426,6 @@ function checkAnswer()
 }
 
 
-const progressBar = document.getElementById("progress-bar");
-const progressText = document.getElementById("progress-text")
-const progress = document.getElementById("progress");
-const numOfEquaText = document.getElementById("num-of-equa-text");
-let corrects = 0;
-let wrongs = 0;
 
 function showProgress() 
 {
@@ -388,14 +434,11 @@ function showProgress()
   
   if(progress.textContent == numOfEquations)
   {
-    alert("You got" + String(corrects + "/"+ numOfEquations));
+    alert("You got: " + String(corrects + "/"+ numOfEquations));
   }
 }
 
-const revealAnsButton = document.getElementById("reveal-answer-button");
-let revealedAns = false;
 
-revealAnsButton.addEventListener('click', revealAns);
 
 function revealAns()
 {
@@ -414,12 +457,7 @@ function revealAns()
   }
 }
 
-//Time for some polishing
-const menuRevealText = document.getElementById("menu-reveal-text");
-const theMenu = document.getElementById("menu");
-const theMenuHolder = document.getElementById("menu-holder");
 
-menuRevealText.addEventListener('click', showMenu);
 
 function showMenu()
 {
@@ -428,7 +466,7 @@ function showMenu()
   theMenuHolder.classList.remove("menu-exit");
 }
 
-settingsConfirmButton.addEventListener("click", menuExitAnim);
+
 
 function menuExitAnim()
 {
