@@ -351,8 +351,6 @@ function resetSection()
   isCorrect = false;
   countAsWrong = false;
   progressSaved = false;
-
-  corrects = 0;
 }
 
 
