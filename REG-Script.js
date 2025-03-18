@@ -270,12 +270,19 @@ function getSettingValues()
     numOfNums = selectedNumOfNums.value;
     console.log(numOfNums);
     
-    numOfEquations = selectedNumOfEquations.value;
-    numOfEquaText.textContent = numOfEquations;
-    progressBar.max = numOfEquations;
-    progressBar.value = 0;
+    assignProgressValues();
     
-    progress.textContent= 0;
+}
+
+function assignProgressValues() {
+  numOfEquations = selectedNumOfEquations.value;
+  numOfEquaText.textContent = numOfEquations;
+  progressBar.max = numOfEquations;
+  progressBar.value = 0;
+    
+  progress.textContent= 0;
+  
+  corrects = 0;
 }
 
 
@@ -388,11 +395,8 @@ function checkAnswer()
       
       if(progressSaved == false)
       {
-        if(progressSaved == false)
-        {
-          progress.textContent = eval(Number(progress.innerHTML) + 1);
-          progressSaved = true;
-        }
+        progress.textContent = eval(Number(progress.innerHTML) + 1);
+        progressSaved = true;
       }
     }
     else if(answerInput.value == "")
@@ -433,6 +437,8 @@ function showProgress()
   if(progress.textContent == numOfEquations)
   {
     alert("You got: " + String(corrects + "/"+ numOfEquations));
+    
+    assignProgressValues();
   }
 }
 
