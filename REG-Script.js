@@ -90,6 +90,11 @@ const theMenuHolder = document.getElementById("menu-holder");
 menuRevealText.addEventListener('click', showMenu);
 settingsConfirmButton.addEventListener("click", menuExitAnim);
 
+function storeInputData()
+{
+  
+}
+
 function checkIfHasNumbers()
 {
   for(let inputField of inputFields)
@@ -223,10 +228,15 @@ function getSettingValues()
   {
     userDpInput.value = 100;
   }
-  //Surprisingly, it also changes to one if there has been no inputted dp value, which is ni
+  //Surprisingly, it also changes to one if there has been no inputted dp value, which is nice
   else if(userDpInput.value < 1)
   {
     userDpInput.value = 1;
+  }
+  
+  if(selectedNumOfEquations.value < 1)
+  {
+    selectedNumOfEquations.value = 1;
   }
   
   //gets user's chosen number of decimals
