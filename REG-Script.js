@@ -25,7 +25,7 @@ let maxValue = 0;
 userMaxValue.addEventListener('change', compareValues);
 userMinValue.addEventListener('change', compareValues);
 
-const chosenOperators = document.getElementsByName("chosen-operators");
+const chosenOperators = Array.from(document.getElementsByName("chosen-operators"));
 
 const selectedNumOfNums = document.getElementById("number-of-numbers");
 let numOfNums = 0;
@@ -90,9 +90,35 @@ const theMenuHolder = document.getElementById("menu-holder");
 menuRevealText.addEventListener('click', showMenu);
 settingsConfirmButton.addEventListener("click", menuExitAnim);
 
-function storeInputData()
+let retrievedData = {};
+
+retrieveData();
+
+function retrieveData()
 {
-  
+  if(localStorage.getItem('customisation-info') != null)
+  {
+    retrievedData = JSON.parse(localStorage.getItem('customisation-info'));
+
+    //assigns retrieved data to corresponding values
+
+    selectedNumOfEquations.value = String(retrievedData.storedNumOfEquations);
+    selectedNumOfNums.value = String(retrievedData.storednumOfNums);
+    userMinValue.value = String(retrievedData.storedMinValue);
+    userMaxValue.value = String(retrievedData.storedMaxValue);
+    userDpInput.value = String(retrievedData.storedDpValue);
+
+    let count = 0;
+
+    for(let chosenOperator of chosenOperators)
+    { 
+      let operatorIndex = chosenOperators.indexOf(chosenOperator);
+      if(retrievedData.storedOperators[operatorIndex] == "true")
+      {
+        chosenOperator.checked = true;
+      }
+    }
+  }
 }
 
 function checkIfHasNumbers()
@@ -277,15 +303,45 @@ function getSettingValues()
   
   
   //gets number of numbers to generate
-    numOfNums = selectedNumOfNums.value;
+    numOfEquations = Number(selectedNumOfEquations.value);
+    numOfNums = Number(selectedNumOfNums.value);
     console.log(numOfNums);
+
+    storeData();
     
     assignProgressValues();
     
 }
 
+function storeData()
+{
+  let operators= [];
+
+  for(let chosenOperator of chosenOperators)
+  {
+    if(chosenOperator.checked)
+    {
+      operators.splice(operators.length, 0, "true");
+    }
+    else
+    {
+      operators.splice(operators.length, 0, "false");
+    }
+  }
+
+  let dataToStore = {
+    storedNumOfEquations: numOfEquations,
+    storednumOfNums: numOfNums,
+    storedMinValue: minValue,
+    storedMaxValue: maxValue,
+    storedDpValue: Number(userDpInput.value),
+    storedOperators: operators
+  }
+
+  localStorage.setItem('customisation-info', JSON.stringify(dataToStore));
+}
+
 function assignProgressValues() {
-  numOfEquations = selectedNumOfEquations.value;
   numOfEquaText.textContent = numOfEquations;
   progressBar.max = numOfEquations;
   progressBar.value = 0;
