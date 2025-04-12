@@ -90,33 +90,35 @@ const theMenuHolder = document.getElementById("menu-holder");
 menuRevealText.addEventListener('click', showMenu);
 settingsConfirmButton.addEventListener("click", menuExitAnim);
 
-let retrievedData = {};
+let retrievedMenuData = {};
 
-retrieveData();
+retrieveMenuData();
 
-function retrieveData()
+function retrieveMenuData()
 {
   if(localStorage.getItem('customisation-info') != null)
   {
-    retrievedData = JSON.parse(localStorage.getItem('customisation-info'));
+    retrievedMenuData = JSON.parse(localStorage.getItem('customisation-info'));
 
     //assigns retrieved data to corresponding values
 
-    selectedNumOfEquations.value = String(retrievedData.storedNumOfEquations);
-    selectedNumOfNums.value = String(retrievedData.storednumOfNums);
-    userMinValue.value = String(retrievedData.storedMinValue);
-    userMaxValue.value = String(retrievedData.storedMaxValue);
-    userDpInput.value = String(retrievedData.storedDpValue);
+    selectedNumOfEquations.value = String(retrievedMenuData.storedNumOfEquations);
+    selectedNumOfNums.value = String(retrievedMenuData.storednumOfNums);
+    userMinValue.value = String(retrievedMenuData.storedMinValue);
+    userMaxValue.value = String(retrievedMenuData.storedMaxValue);
+    userDpInput.value = String(retrievedMenuData.storedDpValue);
 
-    let count = 0;
-
+    //if the variable's value (e.g., storedOperators) is true, the checkbox will be checked
     for(let chosenOperator of chosenOperators)
     { 
       let operatorIndex = chosenOperators.indexOf(chosenOperator);
-      if(retrievedData.storedOperators[operatorIndex] == "true")
-      {
-        chosenOperator.checked = true;
-      }
+      chosenOperator.checked = retrievedMenuData.storedOperators[operatorIndex];
+    }
+
+    revealDpInputCheckbox.checked = retrievedMenuData.storedDpInputStatus;
+    if(revealDpInputCheckbox.checked)
+    {
+      userDpInput.style.display = "flex";
     }
   }
 }
@@ -307,38 +309,53 @@ function getSettingValues()
     numOfNums = Number(selectedNumOfNums.value);
     console.log(numOfNums);
 
-    storeData();
+    storeMenuData();
     
     assignProgressValues();
     
 }
 
-function storeData()
+function storeMenuData()
 {
+  //It checks through all the operator checkboxs and adds their status to an array, which is then retrieved
   let operators= [];
 
   for(let chosenOperator of chosenOperators)
   {
     if(chosenOperator.checked)
     {
-      operators.splice(operators.length, 0, "true");
+      operators.splice(operators.length, 0, true);
     }
     else
     {
-      operators.splice(operators.length, 0, "false");
+      operators.splice(operators.length, 0, false);
     }
   }
 
-  let dataToStore = {
+  //returns true or false if the checkbox to reveal the decimal place input element is checked
+  function revealDpInputStatus()
+  {
+    if(revealDpInputCheckbox.checked)
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+  }
+
+  let menuDataToStore = {
     storedNumOfEquations: numOfEquations,
     storednumOfNums: numOfNums,
     storedMinValue: minValue,
     storedMaxValue: maxValue,
     storedDpValue: Number(userDpInput.value),
-    storedOperators: operators
+    storedOperators: operators,
+    storedDpInputStatus: revealDpInputStatus()
   }
 
-  localStorage.setItem('customisation-info', JSON.stringify(dataToStore));
+  localStorage.setItem('customisation-info', JSON.stringify(menuDataToStore));
 }
 
 function assignProgressValues() {
