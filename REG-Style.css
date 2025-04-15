@@ -20,8 +20,26 @@
   }
 }
 
+::selection{
+  background-color: #F6F1DE;
+  color: black;
+}
+::-moz-selection{
+  background-color: #F6F1DE;
+  color: black;
+}
+
+body{
+  color: white;
+  background-color: #3E3F5B;
+}
+
 p,h1{
   cursor: text;
+}
+p:scope,h1:scope{
+  background-color: #F6F1DE;
+  color: black;
 }
 
 fieldset{
@@ -35,6 +53,7 @@ fieldset{
   justify-content: center;
   
   border-radius: 20px;
+  border-color: rgb(from #8AB2A6 r g b / 0.4);
 }
 fieldset#operator-list{
   display: flex;
@@ -51,16 +70,16 @@ input[type="text"], input[type="number"]{
   cursor: text;
 }
 input[type="checkbox"]{
-  accent-color: grey;
+  accent-color: #F6F1DE;
   cursor: pointer;
 }
 input[type="number"]:focus, input[type="text"]:focus{
-  outline-color: grey;
+  outline-color: #F6F1DE;
 }
 
 section{
-  background-color: black;
-  color: white;
+  background-color: #ACD3A8;
+  color: black;
   height: fit-content;
   padding: 10px;
   border-radius: 20px;
@@ -70,21 +89,23 @@ section{
   display: flex;
   flex-direction: column;
   gap: 15px;
+
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
 }
 
 button{
   width: fit-content;
   margin-left: auto;
   
-  border-radius: 6px;
+  border-radius: 10px;
   border-style: none;
   
   background-color: transparent;
   
-  color: white;
+  color: black;
 }
 button:hover{
-  background-color: rgb(50,50,50);
+  background-color: color-mix(in srgb, #ACD3A8, black 10%);
 }
 
 #everything{
@@ -93,6 +114,7 @@ button:hover{
   
   font-family: Arial;
   height: 100vh;
+  padding-bottom: 80vh;
 }
 
 #decimal-places-input{
@@ -102,11 +124,6 @@ button:hover{
 #menu-reveal-text{
   margin-right: auto;
   width: 100%;
-}
-
-#menu-reveal-text:hover{
-  text-decoration: underline;
-  text-decoration-color: black;
 }
 
 #menu{
