@@ -435,7 +435,7 @@ function getRandomFloat(max, min)
 function resetSection()
 {
   answerInput.value = "";
-  answerSection.style.backgroundColor = "black";
+  answerSection.style.backgroundColor = "var(--main-color)";
   feedbackText.innerHTML = "";
   revealedAns = false;
   isCorrect = false;
@@ -457,7 +457,6 @@ function checkAnswer()
     {
       if(revealedAns == false)
       {
-        answerSection.style.backgroundColor = "rgb(50,130,50)";
         feedbackText.innerHTML = "Correct!";
         isCorrect = true;
 
@@ -469,7 +468,6 @@ function checkAnswer()
         }
       }
       else{
-        answerSection.style.backgroundColor = "rgb(50,130,50)";
         feedbackText.innerHTML = "Correct, but you got help.";
         isCorrect = true;
         //is counted as wrong if answer is revealed
@@ -487,7 +485,6 @@ function checkAnswer()
       feedbackText.innerHTML = "Nothing to check...";
     }
     else{
-      answerSection.style.backgroundColor = "rgb(200,50,50)";
       
       feedbackText.innerHTML = "wrong...";
       countAsWrong = true;

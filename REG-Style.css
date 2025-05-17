@@ -20,25 +20,31 @@
   }
 }
 
+:root{
+  --main-color: #ACD3A8;
+  --complementary-color: #F6F1DE;
+  --background-color: #3E3F5B;
+}
+
 ::selection{
-  background-color: #F6F1DE;
+  background-color: var(--main-color);
   color: black;
 }
 ::-moz-selection{
-  background-color: #F6F1DE;
+  background-color: var(--complementary-color);
   color: black;
 }
 
 body{
   color: white;
-  background-color: #3E3F5B;
+  background-color: var(--background-color);
 }
 
 p,h1{
   cursor: text;
 }
 p:scope,h1:scope{
-  background-color: #F6F1DE;
+  background-color: var(--complementary-color);
   color: black;
 }
 
@@ -53,7 +59,7 @@ fieldset{
   justify-content: center;
   
   border-radius: 20px;
-  border-color: rgb(from #8AB2A6 r g b / 0.4);
+  border-color: rgb(from var(--main-color) r g b / 0.4);
 }
 fieldset#operator-list{
   display: flex;
@@ -70,15 +76,15 @@ input[type="text"], input[type="number"]{
   cursor: text;
 }
 input[type="checkbox"]{
-  accent-color: #F6F1DE;
+  accent-color: var(--complementary-color);
   cursor: pointer;
 }
 input[type="number"]:focus, input[type="text"]:focus{
-  outline-color: #F6F1DE;
+  outline-color: var(--complementary-color);
 }
 
 section{
-  background-color: #ACD3A8;
+  background-color: var(--main-color);
   color: black;
   height: fit-content;
   padding: 10px;
@@ -105,7 +111,7 @@ button{
   color: black;
 }
 button:hover{
-  background-color: color-mix(in srgb, #ACD3A8, black 10%);
+  background-color: color-mix(in srgb, var(--main-color), black 10%);
 }
 
 #everything{
