@@ -270,11 +270,9 @@ function getSettingValues()
   //gets user's chosen number of decimals
   if(revealDpInputCheckbox.checked){
     chosenDecimals = Number(userDpInput.value);
-    console.log("dp value= " + chosenDecimals);
   }
   else if(!revealDpInputCheckbox.checked){
     chosenDecimals = 0;
-    console.log("dp value= " + chosenDecimals);
   }
   
   //checks if the user min value is bigger than the user max value and swaps them around
@@ -301,14 +299,11 @@ function getSettingValues()
     minValue = Number(userMinValue.value);
     maxValue = Number(userMaxValue.value);
     
-    console.log("min= " + minValue,"max= " + maxValue);
   
   
   //gets number of numbers to generate
     numOfEquations = Number(selectedNumOfEquations.value);
     numOfNums = Number(selectedNumOfNums.value);
-    console.log(numOfNums);
-
     storeMenuData();
     
     assignProgressValues();
@@ -391,7 +386,6 @@ function generateEquation()
     if(!revealDpInputCheckbox.checked)
     {
       equationText.textContent = getRandomInt(maxValue, minValue);
-      console.log(equationText.textContent);
       
       while(numOfNums > 1)
       {
@@ -403,7 +397,6 @@ function generateEquation()
     else if(revealDpInputCheckbox.checked)
   {
     equationText.textContent = getRandomFloat(maxValue, minValue).toFixed(chosenDecimals);
-      console.log(equationText.textContent);
       
     while(numOfNums > 1)
     {
@@ -449,7 +442,6 @@ function checkAnswer()
 {
   let userAns = answerInput.value;
   correctAns = eval(equationText.textContent).toFixed(chosenDecimals);
-  console.log("correct answer = " + correctAns);
   
   if(allConditionsMet == true && equationText.value != "")
   {
